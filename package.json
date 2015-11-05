@@ -1,6 +1,6 @@
 {
   "name": "to-absolute-glob",
-  "description": "Make a glob pattern absolute.",
+  "description": "Make a glob pattern absolute, ensuring that negative globs and patterns with trailing slashes are correctly handled.",
   "version": "0.1.0",
   "homepage": "https://github.com/jonschlinkert/to-absolute-glob",
   "author": "Jon Schlinkert (https://github.com/jonschlinkert)",
@@ -24,9 +24,10 @@
     "mocha": "*"
   },
   "keywords": [
+    "resolve",
+    "pattern",
     "absolute",
-    "glob",
-    "to"
+    "glob"
   ],
   "verb": {
     "related": {

@@ -1,6 +1,6 @@
 # to-absolute-glob [![NPM version](https://badge.fury.io/js/to-absolute-glob.svg)](http://badge.fury.io/js/to-absolute-glob)
 
-> Make a glob pattern absolute.
+> Make a glob pattern absolute, ensuring that negative globs and patterns with trailing slashes are correctly handled.
 
 ## Install
 
