@@ -5,7 +5,9 @@
   "homepage": "https://github.com/jonschlinkert/to-absolute-glob",
   "author": "Jon Schlinkert (https://github.com/jonschlinkert)",
   "repository": "jonschlinkert/to-absolute-glob",
-  "bugs": "https://github.com/jonschlinkert/to-absolute-glob/issues",
+  "bugs": {
+    "url": "https://github.com/jonschlinkert/to-absolute-glob/issues"
+  },
   "license": "MIT",
   "files": [
     "index.js"
@@ -21,20 +23,21 @@
     "extend-shallow": "^2.0.1"
   },
   "devDependencies": {
-    "mocha": "*"
+    "mocha": "^3.0.2"
   },
   "keywords": [
-    "resolve",
-    "pattern",
     "absolute",
-    "glob"
+    "glob",
+    "pattern",
+    "resolve",
+    "to"
   ],
   "verb": {
     "related": {
       "list": [
+        "has-glob",
         "is-glob",
-        "is-valid-glob",
-        "has-glob"
+        "is-valid-glob"
       ]
     }
   }
