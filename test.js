@@ -33,6 +33,11 @@ describe('resolve', function () {
     assert.equal(actual, '!' + path.resolve('a/*.js'));
   });
 
+  it('should make a negative extglob absolute', function () {
+    actual = resolve('!(foo)');
+    assert.equal(actual, path.resolve('!(foo)'));
+  });
+
   it('should make a glob absolute from a cwd', function () {
     actual = resolve('a/*.js', {cwd: 'foo'});
     assert.equal(actual, path.resolve('foo/a/*.js'));

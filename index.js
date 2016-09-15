@@ -2,17 +2,17 @@
 
 var path = require('path');
 var extend = require('extend-shallow');
+var isNegated = require('is-negated-glob');
 
 module.exports = function(glob, options) {
   var opts = extend({}, options);
   opts.cwd = opts.cwd ? path.resolve(opts.cwd) : process.cwd();
 
-  // store first and last characters before glob is modified
-  var prefix = glob.charAt(0);
+  // store last character before glob is modified
   var suffix = glob.slice(-1);
 
-  var isNegative = prefix === '!';
-  if (isNegative) glob = glob.slice(1);
+  var ing = isNegated(glob);
+  glob = ing.pattern;
 
   if (opts.root && glob.charAt(0) === '/') {
     glob = path.join(path.resolve(opts.root), '.' + glob);
@@ -24,5 +24,5 @@ module.exports = function(glob, options) {
     glob += '/';
   }
 
-  return isNegative ? '!' + glob : glob;
+  return ing.negated ? '!' + glob : glob;
 };
