@@ -18,14 +18,14 @@ describe('resolve', function () {
   it('should retain trailing slashes', function () {
     actual = resolve('a/*/');
     assert.equal(actual, path.resolve('a/*') + '/');
-    assert(actual.slice(-1) === '/');
+    assert.equal(actual.slice(-1), '/');
   });
 
   it('should retain trailing slashes with cwd', function () {
     fixture = './fixtures/whatsgoingon/*/';
     actual = resolve(fixture, {cwd: __dirname});
     assert.equal(actual, path.resolve(fixture) + '/');
-    assert(actual.slice(-1) === '/');
+    assert.equal(actual.slice(-1), '/');
   });
 
   it('should make a negative glob absolute', function () {
@@ -36,6 +36,11 @@ describe('resolve', function () {
   it('should make a negative extglob absolute', function () {
     actual = resolve('!(foo)');
     assert.equal(actual, path.resolve('!(foo)'));
+  });
+
+  it('should make an escaped negative extglob absolute', function () {
+    actual = resolve('\\!(foo)');
+    assert.equal(actual, path.resolve('\\!(foo)'));
   });
 
   it('should make a glob absolute from a cwd', function () {
