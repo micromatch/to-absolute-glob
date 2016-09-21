@@ -8,12 +8,19 @@ var isAbsolute = require('is-absolute');
 module.exports = function(glob, options) {
   // shallow clone options
   var opts = extend({}, options);
+
   // ensure cwd is absolute
   var cwd = path.resolve(opts.cwd ? opts.cwd : process.cwd());
+  if (process.platform === 'win32' || opts.unixify === true) {
+    cwd = unixify(cwd);
+  }
 
   var rootDir = opts.root;
   // if `options.root` is defined, ensure it's absolute
   if (rootDir && !isAbsolute(opts.root)) {
+    if (process.platform === 'win32' || opts.unixify === true) {
+      rootDir = unixify(rootDir);
+    }
     rootDir = path.resolve(rootDir);
   }
 
@@ -39,3 +46,7 @@ module.exports = function(glob, options) {
   // re-add leading `!` if it was removed
   return ing.negated ? '!' + glob : glob;
 };
+
+function unixify(filepath) {
+  return filepath.replace(/\\/g, '/');
+}
