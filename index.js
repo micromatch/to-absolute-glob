@@ -17,11 +17,11 @@ module.exports = function(glob, options) {
 
   var rootDir = opts.root;
   // if `options.root` is defined, ensure it's absolute
-  if (rootDir && !isAbsolute(opts.root)) {
+  if (rootDir && (process.platform === 'win32' || !isAbsolute(opts.root))) {
+    rootDir = path.resolve(rootDir);
     if (process.platform === 'win32' || opts.unixify === true) {
       rootDir = unixify(rootDir);
     }
-    rootDir = path.resolve(rootDir);
   }
 
   // store last character before glob is modified
@@ -34,7 +34,7 @@ module.exports = function(glob, options) {
   // make glob absolute
   if (rootDir && glob.charAt(0) === '/') {
     glob = path.join(rootDir, glob);
-  } else if (!isAbsolute(glob)) {
+  } else if (process.platform === 'win32' || !isAbsolute(glob)) {
     glob = path.resolve(cwd, glob);
   }
 
