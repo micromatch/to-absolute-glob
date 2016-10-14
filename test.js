@@ -35,6 +35,13 @@ describe('resolve', function () {
       assert.equal(actual.slice(-1), '/');
     });
 
+    it.skip('should handle dots in glob?', function () {
+      fixture = './fixtures/whatsgoingon/*/';
+      actual = resolve(fixture, {cwd: __dirname});
+      assert.equal(actual, unixify(path.resolve(fixture)) + '/');
+      assert.equal(actual.slice(-1), '/');
+    });
+
     it('should make a negative glob absolute', function () {
       actual = resolve('!a/*.js');
       assert.equal(actual, '!' + unixify(path.resolve('a/*.js')));
@@ -83,17 +90,17 @@ describe('resolve', function () {
 
   describe('windows', function () {
     it('should make an escaped negative extglob absolute', function () {
-      actual = resolve('foo/bar\\!(baz)', {unixify: true});
+      actual = resolve('foo/bar\\!(baz)');
       assert.equal(actual, unixify(path.resolve('foo/bar')) + '\\!(baz)');
     });
 
     it('should make a glob absolute from a root path', function () {
-      actual = resolve('/a/*.js', {root: 'foo\\bar\\baz', unixify: true});
+      actual = resolve('/a/*.js', {root: 'foo\\bar\\baz'});
       assert.equal(actual, unixify(path.resolve('foo/bar/baz/a/*.js')));
     });
 
     it('should make a glob absolute from a root slash', function () {
-      actual = resolve('/a/*.js', {root: '\\\\', unixify: true});
+      actual = resolve('/a/*.js', {root: '\\'});
       assert.equal(actual, unixify(path.resolve('/a/*.js')));
     });
   });
