@@ -16,10 +16,10 @@ module.exports = function(glob, options) {
   var rootDir = opts.root;
   // if `options.root` is defined, ensure it's absolute
   if (rootDir) {
-    if (process.platform === 'win32' || !isAbsolute(rootDir)) {
-      rootDir = path.resolve(rootDir);
-    }
     rootDir = unixify(rootDir);
+    if (process.platform === 'win32' || !isAbsolute(rootDir)) {
+      rootDir = unixify(path.resolve(rootDir));
+    }
   }
 
   // store last character before glob is modified
