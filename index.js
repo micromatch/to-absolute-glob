@@ -11,17 +11,15 @@ module.exports = function(glob, options) {
 
   // ensure cwd is absolute
   var cwd = path.resolve(opts.cwd ? opts.cwd : process.cwd());
-  if (process.platform === 'win32' || opts.unixify === true) {
-    cwd = unixify(cwd);
-  }
+  cwd = unixify(cwd);
 
   var rootDir = opts.root;
   // if `options.root` is defined, ensure it's absolute
-  if (rootDir && (process.platform === 'win32' || !isAbsolute(opts.root))) {
-    rootDir = path.resolve(rootDir);
-    if (process.platform === 'win32' || opts.unixify === true) {
-      rootDir = unixify(rootDir);
+  if (rootDir) {
+    if (process.platform === 'win32' || !isAbsolute(rootDir)) {
+      rootDir = path.resolve(rootDir);
     }
+    rootDir = unixify(rootDir);
   }
 
   // store last character before glob is modified
@@ -33,9 +31,9 @@ module.exports = function(glob, options) {
 
   // make glob absolute
   if (rootDir && glob.charAt(0) === '/') {
-    glob = path.join(rootDir, glob);
+    glob = join(rootDir, glob);
   } else if (process.platform === 'win32' || !isAbsolute(glob)) {
-    glob = path.resolve(cwd, glob);
+    glob = join(cwd, glob);
   }
 
   // if glob had a trailing `/`, re-add it now in case it was removed
@@ -49,4 +47,17 @@ module.exports = function(glob, options) {
 
 function unixify(filepath) {
   return filepath.replace(/\\/g, '/');
+}
+
+function join(dir, glob) {
+  if (!dir) return glob;
+  if (!glob) return dir;
+
+  if (dir.charAt(dir.length - 1) === '/') {
+    dir = dir.slice(0, -1);
+  }
+  if (glob.charAt(0) === '/') {
+    glob = glob.slice(1);
+  }
+  return dir + '/' + glob;
 }
