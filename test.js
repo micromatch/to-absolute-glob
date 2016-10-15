@@ -35,11 +35,10 @@ describe('resolve', function () {
       assert.equal(actual.slice(-1), '/');
     });
 
-    it.skip('should handle dots in glob?', function () {
+    it('should handle ./ at the beginnnig of a glob', function () {
       fixture = './fixtures/whatsgoingon/*/';
       actual = resolve(fixture, {cwd: __dirname});
       assert.equal(actual, unixify(path.resolve(fixture)) + '/');
-      assert.equal(actual.slice(-1), '/');
     });
 
     it('should make a negative glob absolute', function () {
