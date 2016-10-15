@@ -22,12 +22,14 @@ module.exports = function(glob, options) {
     }
   }
 
+  // trim starting ./ from glob patterns
   if (glob.slice(0, 2) === './') {
     glob = glob.slice(2);
   }
 
-  if (glob.slice(0, 1) === '.') {
-    glob = glob.slice(1);
+  // when the glob pattern is only a . use an empty string
+  if (glob.length === 1 && glob === '.') {
+    glob = '';
   }
 
   // store last character before glob is modified
