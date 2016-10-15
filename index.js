@@ -42,7 +42,7 @@ module.exports = function(glob, options) {
   // make glob absolute
   if (rootDir && glob.charAt(0) === '/') {
     glob = join(rootDir, glob);
-  } else if (process.platform === 'win32' || !isAbsolute(glob)) {
+  } else if (!isAbsolute(glob)) {
     glob = join(cwd, glob);
   }
 
