@@ -26,6 +26,10 @@ module.exports = function(glob, options) {
     glob = glob.slice(2);
   }
 
+  if (glob.slice(0, 1) === '.') {
+    glob = glob.slice(1);
+  }
+
   // store last character before glob is modified
   var suffix = glob.slice(-1);
 
@@ -60,5 +64,6 @@ function join(dir, glob) {
   if (glob.charAt(0) === '/') {
     glob = glob.slice(1);
   }
+  if (!glob) return dir;
   return dir + '/' + glob;
 }
