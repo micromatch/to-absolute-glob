@@ -22,6 +22,10 @@ module.exports = function(glob, options) {
     }
   }
 
+  if (glob.slice(0, 2) === './') {
+    glob = glob.slice(2);
+  }
+
   // store last character before glob is modified
   var suffix = glob.slice(-1);
 
@@ -50,9 +54,6 @@ function unixify(filepath) {
 }
 
 function join(dir, glob) {
-  if (!dir) return glob;
-  if (!glob) return dir;
-
   if (dir.charAt(dir.length - 1) === '/') {
     dir = dir.slice(0, -1);
   }
