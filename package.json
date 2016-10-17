@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "extend-shallow": "^2.0.1",
+    "is-absolute": "^0.2.5",
     "is-negated-glob": "^1.0.0"
   },
   "devDependencies": {
