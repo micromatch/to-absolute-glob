@@ -11,17 +11,25 @@ module.exports = function(glob, options) {
 
   // ensure cwd is absolute
   var cwd = path.resolve(opts.cwd ? opts.cwd : process.cwd());
-  if (process.platform === 'win32' || opts.unixify === true) {
-    cwd = unixify(cwd);
-  }
+  cwd = unixify(cwd);
 
   var rootDir = opts.root;
   // if `options.root` is defined, ensure it's absolute
-  if (rootDir && !isAbsolute(opts.root)) {
-    if (process.platform === 'win32' || opts.unixify === true) {
-      rootDir = unixify(rootDir);
+  if (rootDir) {
+    rootDir = unixify(rootDir);
+    if (process.platform === 'win32' || !isAbsolute(rootDir)) {
+      rootDir = unixify(path.resolve(rootDir));
     }
-    rootDir = path.resolve(rootDir);
+  }
+
+  // trim starting ./ from glob patterns
+  if (glob.slice(0, 2) === './') {
+    glob = glob.slice(2);
+  }
+
+  // when the glob pattern is only a . use an empty string
+  if (glob.length === 1 && glob === '.') {
+    glob = '';
   }
 
   // store last character before glob is modified
@@ -33,9 +41,9 @@ module.exports = function(glob, options) {
 
   // make glob absolute
   if (rootDir && glob.charAt(0) === '/') {
-    glob = path.join(rootDir, glob);
-  } else if (!isAbsolute(glob)) {
-    glob = path.resolve(cwd, glob);
+    glob = join(rootDir, glob);
+  } else if (!isAbsolute(glob) || glob.slice(0, 1) === '\\') {
+    glob = join(cwd, glob);
   }
 
   // if glob had a trailing `/`, re-add it now in case it was removed
@@ -49,4 +57,15 @@ module.exports = function(glob, options) {
 
 function unixify(filepath) {
   return filepath.replace(/\\/g, '/');
+}
+
+function join(dir, glob) {
+  if (dir.charAt(dir.length - 1) === '/') {
+    dir = dir.slice(0, -1);
+  }
+  if (glob.charAt(0) === '/') {
+    glob = glob.slice(1);
+  }
+  if (!glob) return dir;
+  return dir + '/' + glob;
 }
