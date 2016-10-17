@@ -1,4 +1,4 @@
-# to-absolute-glob [![NPM version](https://img.shields.io/npm/v/to-absolute-glob.svg?style=flat)](https://www.npmjs.com/package/to-absolute-glob) [![NPM downloads](https://img.shields.io/npm/dm/to-absolute-glob.svg?style=flat)](https://npmjs.org/package/to-absolute-glob) [![Build Status](https://img.shields.io/travis/jonschlinkert/to-absolute-glob.svg?style=flat)](https://travis-ci.org/jonschlinkert/to-absolute-glob)
+# to-absolute-glob [![NPM version](https://img.shields.io/npm/v/to-absolute-glob.svg?style=flat)](https://www.npmjs.com/package/to-absolute-glob) [![NPM downloads](https://img.shields.io/npm/dm/to-absolute-glob.svg?style=flat)](https://npmjs.org/package/to-absolute-glob) [![Linux Build Status](https://img.shields.io/travis/jonschlinkert/to-absolute-glob.svg?style=flat&label=Travis)](https://travis-ci.org/jonschlinkert/to-absolute-glob) [![Windows Build Status](https://img.shields.io/appveyor/ci/jonschlinkert/to-absolute-glob.svg?style=flat&label=AppVeyor)](https://ci.appveyor.com/project/jonschlinkert/to-absolute-glob)
 
 Make a glob pattern absolute, ensuring that negative globs and patterns with trailing slashes are correctly handled.
 
