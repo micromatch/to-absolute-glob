@@ -26,7 +26,6 @@
     "test": "mocha"
   },
   "dependencies": {
-    "extend-shallow": "^2.0.1",
     "is-absolute": "^1.0.0",
     "is-negated-glob": "^1.0.0"
   },

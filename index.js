@@ -1,13 +1,12 @@
 'use strict';
 
 var path = require('path');
-var extend = require('extend-shallow');
 var isNegated = require('is-negated-glob');
 var isAbsolute = require('is-absolute');
 
 module.exports = function(glob, options) {
-  // shallow clone options
-  var opts = extend({}, options);
+  // default options
+  var opts = options || {};
 
   // ensure cwd is absolute
   var cwd = path.resolve(opts.cwd ? opts.cwd : process.cwd());
