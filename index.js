@@ -8,18 +8,9 @@ module.exports = function(glob, options) {
   // default options
   var opts = options || {};
 
-  // ensure cwd is absolute
-  var cwd = path.resolve(opts.cwd ? opts.cwd : process.cwd());
-  cwd = unixify(cwd);
-
-  var rootDir = opts.root;
-  // if `options.root` is defined, ensure it's absolute
-  if (rootDir) {
-    rootDir = unixify(rootDir);
-    if (process.platform === 'win32' || !isAbsolute(rootDir)) {
-      rootDir = unixify(path.resolve(rootDir));
-    }
-  }
+  // ensure provided paths are absolute
+  var cwd = ensureAbsolute(opts.cwd ? opts.cwd : process.cwd());
+  var rootDir = opts.root ? ensureAbsolute(opts.root) : undefined;
 
   // trim starting ./ from glob patterns
   if (glob.slice(0, 2) === './') {
@@ -53,6 +44,12 @@ module.exports = function(glob, options) {
   // re-add leading `!` if it was removed
   return ing.negated ? '!' + glob : glob;
 };
+
+function ensureAbsolute(filepath) {
+  filepath = unixify(filepath);
+  var absoluteFilepath = isAbsolute(filepath) ? filepath : path.resolve(filepath);
+  return unixify(absoluteFilepath);
+}
 
 function unixify(filepath) {
   return filepath.replace(/\\/g, '/');
