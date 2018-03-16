@@ -47,7 +47,7 @@ toAbsGlob('a/*/');
 
 ```js
 toAbsGlob('./fixtures/whatsgoingon/*/', {cwd: __dirname});
-//=> '/dev/foo/'
+//=> '/dev/foo/fixtures/whatsgoingon/*/'
 ```
 
 **makes a negative glob absolute**
