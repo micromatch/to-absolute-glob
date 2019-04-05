@@ -50,6 +50,19 @@ module.exports = function(glob, options) {
     glob += '/';
   }
 
+  // resolve '..' parts in path
+  glob = glob.split('/').reduce(function(parts, part) {
+    if (part === '..') {
+      if (parts.pop() === '' && !parts.length) {
+        parts.push('');
+      }
+    } else {
+      parts.push(part);
+    }
+    
+    return parts;
+  }, []).join('/');
+
   // re-add leading `!` if it was removed
   return ing.negated ? '!' + glob : glob;
 };
