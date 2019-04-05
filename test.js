@@ -76,6 +76,11 @@ describe('resolve', function () {
       assert.equal(actual, unixify(path.resolve('/a/*.js')));
     });
 
+    it('should resolve relative parent dirs', function () {
+      actual = resolve('/../../a/b/c/../d/../../e/f/g/../*', {root: '/'});
+      assert.equal(actual, unixify(path.resolve('/a/e/f/*')));
+    });
+
     it('should make a glob absolute from a negative root path', function () {
       actual = resolve('!/a/*.js', {root: 'foo'});
       assert.equal(actual, '!' + unixify(path.resolve('foo/a/*.js')));
