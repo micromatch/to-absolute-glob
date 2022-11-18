@@ -82,6 +82,13 @@ describe('resolve', function () {
       assert.equal(actual, expected);
     });
 
+    it('works with multiple characters in succession in cwd', function () {
+      actual = resolve('a/*.js', {cwd: '/((foo))/[[bar]]/{{baz}}'});
+      var expected = unixify(path.resolve('/((foo))/[[bar]]/{{baz}}/a/*.js'))
+        .replace('/((foo))/[[bar]]/{{baz}}', '/\\(\\(foo\\)\\)/\\[\\[bar\\]\\]/\\{\\{baz\\}\\}');
+      assert.equal(actual, expected);
+    });
+
     it('should make a negative glob absolute from a cwd', function () {
       actual = resolve('!a/*.js', {cwd: 'foo'});
       assert.equal(actual, '!' + unixify(path.resolve('foo/a/*.js')));
@@ -115,6 +122,13 @@ describe('resolve', function () {
       actual = resolve('/a/*.js', {root: '/\\(foo\\)/\\[bar\\]/\\{baz\\}/\\*/\\*\\*/\\?/\\!'});
       var expected = unixify(path.resolve('/(foo)/[bar]/{baz}/*/**/?/!/a/*.js'))
         .replace('/(foo)/[bar]/{baz}/*/**/?/!', '/\\(foo\\)/\\[bar\\]/\\{baz\\}/\\*/\\*\\*/\\?/\\!');
+      assert.equal(actual, expected);
+    });
+
+    it('works with multiple characters in succession in root', function () {
+      actual = resolve('/a/*.js', {root: '/((foo))/[[bar]]/{{baz}}'});
+      var expected = unixify(path.resolve('/((foo))/[[bar]]/{{baz}}/a/*.js'))
+        .replace('/((foo))/[[bar]]/{{baz}}', '/\\(\\(foo\\)\\)/\\[\\[bar\\]\\]/\\{\\{baz\\}\\}');
       assert.equal(actual, expected);
     });
 

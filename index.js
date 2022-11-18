@@ -59,23 +59,11 @@ module.exports = function(glob, options) {
 };
 
 function escape(path) {
-  return path
-    .replace(/\[(.*?)\]/g, "\\[$1\\]")
-    .replace(/\((.*?)\)/g, "\\($1\\)")
-    .replace(/\{(.*?)\}/g, "\\{$1\\}")
-    .replace(/\*/g, "\\*")
-    .replace(/\!/g, "\\!")
-    .replace(/\?/g, "\\?");
+  return path.replace(/([({[\]})*?!])/g, '\\$1');
 }
 
 function unescape(path) {
-  return path
-    .replace(/\\\[(.*?)\\\]/g, "[$1]")
-    .replace(/\\\((.*?)\\\)/g, "($1)")
-    .replace(/\\\{(.*?)\\\}/g, "{$1}")
-    .replace(/\\\*/g, "*")
-    .replace(/\\\!/g, "!")
-    .replace(/\\\?/g, "?");
+  return path.replace(/\\([({[\]})*?!])/g, '$1');
 }
 
 // Before calling unixify, we remove the escapes and then
