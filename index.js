@@ -9,16 +9,20 @@ module.exports = function(glob, options) {
   var opts = options || {};
 
   // ensure cwd is absolute
-  var cwd = path.resolve(opts.cwd ? opts.cwd : process.cwd());
+  var cwd = unescape(opts.cwd ? opts.cwd : process.cwd())
+  cwd = path.resolve(cwd);
   cwd = unixify(cwd);
+  cwd = escape(cwd);
 
   var rootDir = opts.root;
   // if `options.root` is defined, ensure it's absolute
   if (rootDir) {
+    rootDir = unescape(rootDir);
     rootDir = unixify(rootDir);
     if (process.platform === 'win32' || !isAbsolute(rootDir)) {
       rootDir = unixify(path.resolve(rootDir));
     }
+    rootDir = escape(rootDir);
   }
 
   // trim starting ./ from glob patterns
@@ -54,8 +58,18 @@ module.exports = function(glob, options) {
   return ing.negated ? '!' + glob : glob;
 };
 
+function escape(path) {
+  return path.replace(/([({[\]})*?!])/g, '\\$1');
+}
+
+function unescape(path) {
+  return path.replace(/\\([({[\]})*?!])/g, '$1');
+}
+
+// Before calling unixify, we remove the escapes and then
+// we add them back afterwards to avoid double-escaping
 function unixify(filepath) {
-  return filepath.replace(/\\/g, '/');
+  return filepath.replace(/\\/g, "/");
 }
 
 function join(dir, glob) {
