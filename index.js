@@ -9,7 +9,7 @@ module.exports = function(glob, options) {
   var opts = options || {};
 
   // ensure cwd is absolute
-  var cwd = unescape(opts.cwd ? opts.cwd : process.cwd())
+  var cwd = unescape(opts.cwd ? opts.cwd : process.cwd());
   cwd = path.resolve(cwd);
   cwd = unixify(cwd);
   cwd = escape(cwd);
@@ -69,7 +69,7 @@ function unescape(path) {
 // Before calling unixify, we remove the escapes and then
 // we add them back afterwards to avoid double-escaping
 function unixify(filepath) {
-  return filepath.replace(/\\/g, "/");
+  return filepath.replace(/\\/g, '/');
 }
 
 function join(dir, glob) {
