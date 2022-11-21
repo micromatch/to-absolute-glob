@@ -40,6 +40,18 @@ describe('resolve', function() {
       assert.equal(actual, unixify(path.resolve(fixture)) + '/');
     });
 
+    it('should handle ../ at the beginnnig of a glob', function() {
+      fixture = '../fixtures/whatsgoingon/*/';
+      actual = resolve(fixture, {cwd: __dirname});
+      assert.equal(actual, unixify(path.resolve(fixture)) + '/');
+    });
+
+    it('should handle multiple ../ at the beginnnig of a glob', function() {
+      fixture = '../../fixtures/whatsgoingon/*/';
+      actual = resolve(fixture, {cwd: __dirname});
+      assert.equal(actual, unixify(path.resolve(fixture)) + '/');
+    });
+
     it('should make a negative glob absolute', function() {
       actual = resolve('!a/*.js');
       assert.equal(actual, '!' + unixify(path.resolve('a/*.js')));
@@ -58,6 +70,16 @@ describe('resolve', function() {
     it('should make a negative glob (just `.`) absolute', function() {
       actual = resolve('!.');
       assert.equal(actual, '!' + unixify(path.resolve('.')));
+    });
+
+    it('should make a negative glob (starting with ../) absolute', function() {
+      actual = resolve('!../fixtures/whatsgoingon/*/');
+      assert.equal(actual, '!' + unixify(path.resolve('../fixtures/whatsgoingon/*/')) + '/');
+    });
+
+    it('should make a negative glob (starting with multiple ../) absolute', function() {
+      actual = resolve('!../../fixtures/whatsgoingon/*/');
+      assert.equal(actual, '!' + unixify(path.resolve('../../fixtures/whatsgoingon/*/')) + '/');
     });
 
     it('should make a negative extglob absolute', function() {

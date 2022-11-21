@@ -80,5 +80,12 @@ function join(dir, glob) {
     glob = glob.slice(1);
   }
   if (!glob) return dir;
+
+  // Resolve `../` segements in the  glob
+  while (glob.slice(0, 3) === '../') {
+    dir = dir.slice(0, dir.lastIndexOf('/'));
+    glob = glob.slice(3);
+  }
+
   return dir + '/' + glob;
 }
