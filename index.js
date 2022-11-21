@@ -25,6 +25,13 @@ module.exports = function(glob, options) {
     rootDir = escape(rootDir);
   }
 
+  // store last character before glob is modified
+  var suffix = glob.slice(-1);
+
+  // check to see if glob is negated (and not a leading negated-extglob)
+  var ing = isNegated(glob);
+  glob = ing.pattern;
+
   // trim starting ./ from glob patterns
   if (glob.slice(0, 2) === './') {
     glob = glob.slice(2);
@@ -34,13 +41,6 @@ module.exports = function(glob, options) {
   if (glob.length === 1 && glob === '.') {
     glob = '';
   }
-
-  // store last character before glob is modified
-  var suffix = glob.slice(-1);
-
-  // check to see if glob is negated (and not a leading negated-extglob)
-  var ing = isNegated(glob);
-  glob = ing.pattern;
 
   // make glob absolute
   if (rootDir && glob.charAt(0) === '/') {
