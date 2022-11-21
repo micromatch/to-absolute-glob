@@ -45,6 +45,21 @@ describe('resolve', function() {
       assert.equal(actual, '!' + unixify(path.resolve('a/*.js')));
     });
 
+    it('should make a negative glob (starting with `./`) absolute', function() {
+      actual = resolve('!./a/*.js');
+      assert.equal(actual, '!' + unixify(path.resolve('a/*.js')));
+    });
+
+    it('should make a negative glob (just `./`) absolute', function() {
+      actual = resolve('!./');
+      assert.equal(actual, '!' + unixify(path.resolve('.')) + '/');
+    });
+
+    it('should make a negative glob (just `.`) absolute', function() {
+      actual = resolve('!.');
+      assert.equal(actual, '!' + unixify(path.resolve('.')));
+    });
+
     it('should make a negative extglob absolute', function() {
       actual = resolve('!(foo)');
       assert.equal(actual, unixify(path.resolve('!(foo)')));
